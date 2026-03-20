@@ -1,5 +1,11 @@
 {
     "require": {
         "mongodb/mongodb": "^1.17"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "mongodb/mongodb": true
+        }
     }
 }
