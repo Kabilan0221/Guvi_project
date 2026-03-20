@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["php80", "php80Extensions.mongodb", "php80Extensions.redis", "php80Extensions.pdo_mysql", "php80Packages.composer"]
+nixPkgs = ["php80", "php80Packages.composer"]
 
 [phases.install]
-cmds = ["composer install --no-dev --ignore-platform-reqs"]
+cmds = ["composer install --ignore-platform-reqs --no-dev"]
 
 [start]
 cmd = "php -S 0.0.0.0:$PORT -t ."

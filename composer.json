@@ -1,5 +1,11 @@
 {
     "require": {
-        "mongodb/mongodb": "1.17"
+        "mongodb/mongodb": "^1.17"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "platform": {
+            "ext-mongodb": "1.17.0"
+        }
     }
 }
