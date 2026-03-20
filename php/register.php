@@ -1,15 +1,24 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 header('Content-Type: application/json');
+
 require_once 'db_mysql.php';
 
 // Auto create table if not exists
-$pdo->exec("CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)");
+try {
+    $pdo->exec("CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(100) NOT NULL,
+        email VARCHAR(150) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+} catch (\PDOException $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Table creation failed: ' . $e->getMessage()]);
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -33,7 +42,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// Check if email already exists
 $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
 $stmt->execute([$email]);
 if ($stmt->fetch()) {
@@ -42,7 +50,6 @@ if ($stmt->fetch()) {
     exit;
 }
 
-// Insert user
 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 $insertStmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
 try {
