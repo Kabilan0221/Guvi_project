@@ -1,11 +1,8 @@
 [phases.setup]
-nixPkgs = ["php80", "php80Packages.composer"]
+nixPkgs = ["php80", "php80Packages.composer", "php80Extensions.pdo_mysql", "php80Extensions.mongodb", "php80Extensions.redis"]
 
-[phases.build]
+[phases.install]
 cmds = ["composer install --no-dev --ignore-platform-reqs"]
-
-[phases.setup.environment]
-PHPRC = "/etc/php80"
 
 [start]
 cmd = "php -S 0.0.0.0:$PORT"

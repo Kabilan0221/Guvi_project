@@ -5,7 +5,8 @@
     "config": {
         "optimize-autoloader": true,
         "platform": {
-            "ext-mongodb": "1.17.0"
+            "ext-mongodb": "1.17.0",
+            "ext-redis": "6.0.0"
         }
     }
 }
