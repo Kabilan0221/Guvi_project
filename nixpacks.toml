@@ -1,6 +1,3 @@
-[phases.setup]
-nixPkgs = ["php80", "php80Packages.composer", "php80Extensions.pdo_mysql", "php80Extensions.mongodb", "php80Extensions.redis"]
-
 [phases.install]
 cmds = ["composer install --no-dev --ignore-platform-reqs"]
 
