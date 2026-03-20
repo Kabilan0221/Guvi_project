@@ -2,7 +2,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 try {
-    $mongoClient = new MongoDB\Client("mongodb://127.0.0.1:27017");
+    $mongoUrl = getenv('MONGO_URL') ?: 'mongodb://127.0.0.1:27017';
+    $mongoClient = new MongoDB\Client($mongoUrl);
     $mongoDb = $mongoClient->auth_app;
     $usersCollection = $mongoDb->users;
 } catch (Exception $e) {
