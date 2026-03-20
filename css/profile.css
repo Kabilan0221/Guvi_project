@@ -1,8 +1,13 @@
 body {
-    background-color: #f8f9fa;
+    background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop') no-repeat center center fixed !important;
+    background-size: cover !important;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 .card {
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card:hover {
