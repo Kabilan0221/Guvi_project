@@ -1,14 +1,12 @@
 {
     "require": {
-        "mongodb/mongodb": "^1.17"
+        "mongodb/mongodb": "^1.21"
     },
     "config": {
         "optimize-autoloader": true,
         "platform": {
-            "ext-mongodb": "1.21.0",
-            "ext-pdo_mysql": "8.0.0",
-            "ext-redis": "6.0.0",
-            "php": "8.0.0"
+            "php": "8.4.0",
+            "ext-mongodb": "1.21.0"
         }
     }
 }
