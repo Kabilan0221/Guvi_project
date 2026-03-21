@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // If already logged in, redirect to profile
-    if(localStorage.getItem('auth_token')) {
+    if(localStorage.getItem('token')) {
         window.location.href = 'profile.html';
         return;
     }
@@ -32,7 +32,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if(response.success && response.token) {
-                    localStorage.setItem('auth_token', response.token);
+                    localStorage.setItem('token', response.token);
                     alertBox.text('Login successful! Redirecting...').addClass('alert-success').removeClass('d-none');
                     setTimeout(function() {
                         window.location.href = 'profile.html';
