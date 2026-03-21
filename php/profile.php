@@ -1,9 +1,14 @@
 <?php
+ini_set('display_errors', 0);
+error_reporting(0);
+ob_start();
 header('Content-Type: application/json');
+
 require_once 'db_mongo.php';
 require_once 'db_redis.php';
+ob_clean();
 
-// Get token - works with PHP CLI server
+// Get token
 $token = '';
 $authHeader = '';
 
@@ -49,17 +54,24 @@ try {
     exit;
 }
 
+// GET - Load profile
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
-        $profile = $usersCollection->findOne(['user_id' => (int)$userId]);
-        $data = $profile ? (array)$profile : [];
+        $profile = $usersCollection->findOne(
+            ['user_id' => (int)$userId],
+            ['typeMap' => ['root' => 'array', 'document' => 'array']]
+        );
+
+        $data = $profile ? $profile : [];
         unset($data['_id'], $data['user_id']);
+
         echo json_encode(['success' => true, 'data' => $data]);
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(['success' => false, 'message' => 'Fetch error: ' . $e->getMessage()]);
     }
 
+// POST - Update profile
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $profileData = [
         'user_id'  => (int)$userId,
@@ -82,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         http_response_code(500);
         echo json_encode(['success' => false, 'message' => 'Update error: ' . $e->getMessage()]);
     }
+
 } else {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Method not allowed']);
